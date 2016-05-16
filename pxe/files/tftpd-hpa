@@ -1,0 +1,7 @@
+# /etc/default/tftpd-hpa
+RUN_DAEMON="yes"
+OPTIONS="-vvvv -l -s {{ pxe_media_dir }}"
+TFTP_OPTIONS="--secure"
+TFTP_ADDRESS="[::]:69"
+TFTP_USERNAME="tftp"
+TFTP_DIRECTORY="{{ pxe_media_dir }}"
