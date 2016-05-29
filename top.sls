@@ -2,6 +2,7 @@ base:
   '*':
     - users
     - salt.minion
+    - pkgs
 {% if grains['virtual'] == "VMware" and grains['os'] == 'Ubuntu'  %}
     - vm.vmware
 {% endif %}
