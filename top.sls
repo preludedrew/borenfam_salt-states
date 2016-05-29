@@ -11,3 +11,5 @@ base:
     - pxe
   'salt-master*':
     - master
+  'mongo-vm*':
+    - mongo
