@@ -3,6 +3,7 @@ base:
     - users
     - salt.minion
     - pkgs
+    - zabbix.agent
 {% if grains['virtual'] == "VMware" and grains['os'] == 'Ubuntu'  %}
     - vm.vmware
 {% endif %}
@@ -16,3 +17,5 @@ base:
     - mongo
   'mysql-vm*':
     - mysql
+  'zabb-vm*':
+    - zabbix.server

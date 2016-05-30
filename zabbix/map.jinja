@@ -1,0 +1,26 @@
+{% load_yaml as zbx_config %}
+zbx_version: '3.0'
+{% endload %}
+
+{% load_yaml as zbx_agent_config %}
+zbx_agent_pid_file: /var/run/zabbix/zabbix_agentd.pid
+zbx_agent_log_file: /var/log/zabbix-agent/zabbix_agentd.log
+zbx_agent_server: zabb-vm.borenfam.com
+zbx_agent_server_active: zabb-vm.borenfam.com
+zbx_agent_include_path: /etc/zabbix/zabbix_agentd.d/
+{% endload %}
+
+{% load_yaml as zbx_server_config %}
+zbx_server_log_file: /var/log/zabbix-server/zabbix_server.log
+zbx_server_debug_lvl: 3
+zbx_server_pid_file: /var/run/zabbix/zabbix_server.pid
+zbx_server_db_host: mysql-vm-ha.borenfam.com
+zbx_server_db_name: zabbix
+zbx_server_db_user: zabbix
+zbx_server_db_pass: zabbix
+zbx_server_db_type: MYSQL
+zbx_server_db_port: 3306
+zbx_server_address: localhost
+zbx_server_port: 10051
+zbx_server_name: zabb-vm
+{% endload %}
