@@ -1,4 +1,4 @@
-{% set drbd_res = salt['grains.filter_by']({
+{% set linuxha_res = salt['grains.filter_by']({
   'nas-vm-1': {
     'drbd_res_name': 'nfs',
     'drbd_server_1': 'nas-vm-1.borenfam.com',
@@ -14,6 +14,24 @@
     'drbd_address_1': '192.168.0.1',
     'drbd_address_2': '192.168.0.2',
     'drbd_port': '7789',
+  },
+  'mysql-vm-1': {
+    'drbd_res_name': 'db',
+    'drbd_server_1': 'mysql-vm-1.borenfam.com',
+    'drbd_server_2': 'mysql-vm-2.borenfam.com',
+    'drbd_address_1': '192.168.0.1',
+    'drbd_address_2': '192.168.0.2',
+    'drbd_port': '7789',
+    'mcast_addr': '225.1.1.1'
+  },
+  'mysql-vm-2': {
+    'drbd_res_name': 'db',
+    'drbd_server_1': 'mysql-vm-1.borenfam.com',
+    'drbd_server_2': 'mysql-vm-2.borenfam.com',
+    'drbd_address_1': '192.168.0.1',
+    'drbd_address_2': '192.168.0.2',
+    'drbd_port': '7789',
+    'mcast_addr': '225.1.1.1'
   },
 }, grain='host')
 %}

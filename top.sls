@@ -14,3 +14,5 @@ base:
     - master
   'mongo-vm*':
     - mongo
+  'mysql-vm*':
+    - mysql

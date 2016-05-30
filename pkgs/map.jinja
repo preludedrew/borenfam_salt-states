@@ -1,6 +1,6 @@
 {% set defaults  = salt['grains.filter_by']({
     'Debian': {
-        'pkgs': ['python-pip'],
+        'pkgs': ['python-pip', 'lvm2'],
     },
     'RedHat': {
         'pkgs': ['python-pip'],
