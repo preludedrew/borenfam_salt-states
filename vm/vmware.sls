@@ -1,3 +1,6 @@
+include:
+  - .network
+
 core|vm|open_vm_tools:
   pkg.installed:
     - pkgs:
