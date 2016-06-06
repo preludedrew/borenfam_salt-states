@@ -4,15 +4,17 @@ base:
     - salt.minion
     - pkgs
     - zabbix.agent
-{% if grains['virtual'] == "VMware" and grains['os'] == 'Ubuntu'  %}
-    - vm.vmware
+    - bootloader
+{% if grains['virtual'] != "physical" %}
+    - vm
 {% endif %}
   'nas-vm-*':
+    - nfs
     - raid.lsi
   'multi-vm*':
     - pxe
   'salt-master*':
-    - master
+    - salt.master
   'mongo-vm*':
     - mongo
   'mysql-vm*':

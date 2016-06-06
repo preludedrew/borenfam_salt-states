@@ -14,7 +14,7 @@ top|users|andrew_user:
     - fullname: "Andrew Boren"
     - home: /home/andrew
     - uid: 1000
-    - gid: 1000
+    - gid_from_name: True
     - groups:
 {% for group in defaults.groups %}
       - {{ group }} 

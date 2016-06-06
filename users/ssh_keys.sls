@@ -8,4 +8,6 @@ core|users|sshkeys-{{ sshkey.user }}:
     {% for key in sshkey.keylist %}
       - '{{ key }}'
     {% endfor %}
+    - require:
+      - user: {{ sshkey.user }}
 {% endfor %}

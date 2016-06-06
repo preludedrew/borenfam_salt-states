@@ -3,6 +3,7 @@
 core|zabbix|agent-pkg:
   pkg.installed:
     - name: zabbix-agent
+    - skip_verify: True
 
 core|zabbix|agent-log-dir:
   file.directory:
@@ -11,6 +12,8 @@ core|zabbix|agent-log-dir:
     - user: zabbix
     - group: zabbix
     - mode: 755
+    - require:
+      - pkg: zabbix-agent
 
 core|zabbix|agent-conf:
   file.managed:
@@ -24,3 +27,5 @@ core|zabbix|agent-conf:
       zbx_agent_server: {{ zbx_agent_config.zbx_agent_server }}
       zbx_agent_server_active: {{ zbx_agent_config.zbx_agent_server_active }}
       zbx_agent_include_path: {{ zbx_agent_config.zbx_agent_include_path }}
+    - require:
+      - pkg: zabbix-agent

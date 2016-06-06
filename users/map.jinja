@@ -1,9 +1,9 @@
 {% set defaults = salt['grains.filter_by']({
-  'Ubuntu':  {
+  'Debian':  {
     'groups': [ 'sudo' ],
   },
-  'Fedora':  {
+  'RedHat':  {
     'groups': [ 'wheel' ],
   },
   'default': None
-}, grain='os') %}
+}, grain='os_family') %}
