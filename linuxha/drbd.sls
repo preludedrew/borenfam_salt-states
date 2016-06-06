@@ -29,8 +29,9 @@ core|linuxha|drbd_res_conf:
 core|linuxha|drbd-mount:
   file.directory:
     - name: /{{ linuxha_res.drbd_res_name}}
-    - user: mysql
-    - group: mysql
+    - user: {{ linuxha_res.drbd_mount_owner }}
+    - group: {{ linuxha_res.drbd_mount_owner }}
+    - create: True
     - recurse:
         - user
         - group

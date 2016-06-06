@@ -6,6 +6,9 @@
     'drbd_address_1': '192.168.0.1',
     'drbd_address_2': '192.168.0.2',
     'drbd_port': '7789',
+    'drbd_mount_owner': 'andrew',
+   'mcast_addr': '225.1.1.1',
+    'cluster_name': 'nas-vm-ha.borenfam.com'
   },
   'nas-vm-2': {
     'drbd_res_name': 'nfs',
@@ -14,6 +17,9 @@
     'drbd_address_1': '192.168.0.1',
     'drbd_address_2': '192.168.0.2',
     'drbd_port': '7789',
+    'drbd_mount_owner': 'andrew',
+    'mcast_addr': '225.1.1.1',
+    'cluster_name': 'nas-vm-ha.borenfam.com'
   },
   'mysql-vm-1': {
     'drbd_res_name': 'db',
@@ -22,7 +28,9 @@
     'drbd_address_1': '192.168.0.1',
     'drbd_address_2': '192.168.0.2',
     'drbd_port': '7789',
-    'mcast_addr': '225.1.1.1'
+    'drbd_mount_owner': 'mysql',
+    'mcast_addr': '225.1.1.1',
+    'cluster_name': 'mysql-vm-ha.borenfam.com'
   },
   'mysql-vm-2': {
     'drbd_res_name': 'db',
@@ -31,7 +39,9 @@
     'drbd_address_1': '192.168.0.1',
     'drbd_address_2': '192.168.0.2',
     'drbd_port': '7789',
-    'mcast_addr': '225.1.1.1'
+    'drbd_mount_owner': 'mysql',
+    'mcast_addr': '225.1.1.1',
+    'cluster_name': 'mysql-vm-ha.borenfam.com'
   },
 }, grain='host')
 %}

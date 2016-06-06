@@ -33,7 +33,7 @@ core|linuxha|corosync-conf:
     - mode: 644
     - template: jinja
     - defaults:
-      cluster_name: 'mysql-vm-ha.borenfam.com'
+      cluster_name: {{ linuxha_res.cluster_name }}
       net_0_addr: {{ net_0_addr }}
       net_1_addr: {{ net_1_addr }}
       mcast_addr: {{ linuxha_res.mcast_addr }}
