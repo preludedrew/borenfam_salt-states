@@ -3,7 +3,7 @@
 {% if grains['os_family'] == 'Debian' %}
 core|salt|salt-repo-debian:
   pkgrepo.managed:
-    - humanname: Ubuntu Trusty SaltStacke Package Repo
+    - humanname: Ubuntu Trusty SaltStack Package Repo
     - name: deb http://repo.saltstack.com/apt/ubuntu/14.04/amd64/2016.3 trusty main
     - dist: trusty
     - file: /etc/apt/sources.list.d/saltstack.list
@@ -31,11 +31,18 @@ core|salt|minion-conf:
     - defaults:
         salt_master: salt-master.borenfam.com
 
+core|salt|minion-service:
+  service.running:
+    - enable: True
+    - name: salt-minion
+
 core|salt|highstate:
   schedule.present:
     - function: state.highstate
     - seconds: {{ minion_config['run_period'] }}
     - splay: {{ minion_config['run_splay'] }}
+    - require:
+      - service: salt-minion
 
 core|salt|lastcontact:
   file.touch:
