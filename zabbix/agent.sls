@@ -24,8 +24,50 @@ core|zabbix|agent-conf:
       zbx_agent_hostname: {{ grains['fqdn'] }}
       zbx_agent_pid_file: {{ zbx_agent_config.zbx_agent_pid_file }}
       zbx_agent_log_file: {{ zbx_agent_config.zbx_agent_log_file }}
-      zbx_agent_server: {{ zbx_agent_config.zbx_agent_server }}
+      zbx_agent_server: {{ zbx_agent_config.zbx_agent_server|join(',') }}
       zbx_agent_server_active: {{ zbx_agent_config.zbx_agent_server_active }}
       zbx_agent_include_path: {{ zbx_agent_config.zbx_agent_include_path }}
     - require:
       - pkg: zabbix-agent
+
+core|zabbix|agent-service:
+  service.running:
+    - name: zabbix-agent
+    - require:
+      - pkg: zabbix-agent
+    - watch:
+      - file: /etc/zabbix/zabbix_agentd.conf
+
+core|zabbix|check-server:
+  cmd.run:
+    - name: 'test ! $(which zabbix_server)'
+
+core|zabbix|dummy-server:
+  file.managed:
+    - name: /usr/local/bin/zabbix_server
+    - user: root
+    - group: root
+    - mode: 755
+    - require:
+      - core|zabbix|check-server
+    - contents: |
+        #!/bin/bash
+        echo "This is script is a hack to fulfill salt zabbix module requirements"
+
+core|zabbix|agent|host-exists:
+  zabbix_host.present:
+    - host: {{ grains.fqdn }}
+    - groups: ['2']
+    - interfaces: [{'type': 1, 'main': 1, 'useip': 1, 'ip': {{ grains.ipv4[0] }}, 'dns': {{ grains.fqdn }}, 'port': '10050'}]
+
+
+{% if salt['zbx.host_exists'](grains['fqdn']) %}
+{% set host_id = salt['zabbix.host_get'](grains.fqdn)[0].hostid %}
+{% set template_list = [{'templateid': '10001'}] %}
+
+core|zabbix|agent|templates:
+  module.run:
+    - name: zabbix.host_update
+    - hostid: {{ host_id }}
+    - connection_args: {'templates' :{{ template_list }}}
+{% endif %}

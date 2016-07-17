@@ -4,9 +4,9 @@
 {# Zabbix 3.0 repo, currently on trusty is supported #}
 core|pkgs|zabbix-repo:
   pkgrepo.managed:
-{% if grains['os_family'] == 'Debian' and grains['oscodename'] == "trusty" %}
+{% if grains['os_family'] == 'Debian' %}
     - humanname: Zabbix {{ zbx_config.zbx_version }} Release ( Debian )
-    - name: deb http://repo.zabbix.com/zabbix/{{ zbx_config.zbx_version }}/ubuntu {{ grains['oscodename'] }} main
+    - name: deb http://repo.zabbix.com/zabbix/{{ zbx_config.zbx_version }}/ubuntu trusty main
     - file: /etc/apt/sources.list.d/zabbix.list
     - keyid: 'D13D58E479EA5ED4'
     - keyserver: keyserver.ubuntu.com
@@ -14,6 +14,12 @@ core|pkgs|zabbix-repo:
     - name: zabbix.repo
     - humanname: Zabbix {{ zbx_config.zbx_version }} Release ( RHEL )
     - baseurl: http://repo.zabbix.com/zabbix/{{ zbx_config.zbx_version }}/rhel/{{ grains['osmajorrelease'] }}/x86_64/
+    - gpgcheck: 1
+    - gpgkey: http://repo.zabbix.com/RPM-GPG-KEY-ZABBIX
+{% elif grains['os_family'] == 'ClearOS' %}
+    - humanname: Zabbix {{ zbx_config.zbx_version }} Release ( RHEL )
+    - baseurl: http://repo.zabbix.com/zabbix/{{ zbx_config.zbx_version }}/rhel/{{ grains['osrelease_info'][0] }}/x86_64/
+    - name: zabbix.repo
     - gpgcheck: 1
     - gpgkey: http://repo.zabbix.com/RPM-GPG-KEY-ZABBIX
 {% endif %}

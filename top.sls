@@ -5,12 +5,15 @@ base:
     - pkgs
     - zabbix.agent
     - bootloader
+    - nfs.client
 {% if grains['virtual'] != "physical" %}
     - vm
 {% endif %}
   'nas-vm-*':
-    - nfs
+    - nfs.server
     - raid.lsi
+  'nas-1':
+    - plex
   'multi-vm*':
     - pxe
   'salt-master*':
@@ -21,3 +24,7 @@ base:
     - mysql
   'zabb-vm*':
     - zabbix.server
+  'zabbproxy-vm*':
+    - zabbix.proxy
+  'build-*':
+    - build

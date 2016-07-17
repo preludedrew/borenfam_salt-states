@@ -2,13 +2,20 @@
 
 core|linuxha|drbd-pkg:
   pkg.installed:
+{% if grains['oscodename'] == 'trusty' %}
     - name: drbd8-utils
     - version: 2:8.4.4-1ubuntu1
+{% elif grains['oscodename'] == 'xenial' %}
+    - name: drbd-utils
+    - version: 8.9.6-1
+{% endif %}
 
-{# Make sure the kernel is downgraded, so drbd works #}
+{# Make sure the kernel is downgraded on trusty, so drbd works #}
+{% if grains['oscodename'] == 'trusty' %}
 core|linuxha|old-kernel:
   pkg.installed:
     - name: linux-generic
+{% endif %}
 
 core|linuxha|drbd_res_conf:
   file.managed:

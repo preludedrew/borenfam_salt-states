@@ -1,14 +1,19 @@
 {% from 'salt/map.jinja' import minion_config with context %}
 
 {% if grains['os_family'] == 'Debian' %}
+
+{% set os_name = grains['os']|lower %}
+{% set rel_name = grains['oscodename'] %}
+{% set rel_ver = grains['osrelease'] %}
+
 core|salt|salt-repo-debian:
   pkgrepo.managed:
     - humanname: Ubuntu Trusty SaltStack Package Repo
-    - name: deb http://repo.saltstack.com/apt/ubuntu/14.04/amd64/2016.3 trusty main
-    - dist: trusty
+    - name: deb http://repo.saltstack.com/apt/{{ os_name }}/{{ rel_ver }}/amd64/2016.3 {{ rel_name }} main
+    - dist: {{ rel_name }}
     - file: /etc/apt/sources.list.d/saltstack.list
     - gpgcheck: 1
-    - key_url: https://repo.saltstack.com/apt/ubuntu/14.04/amd64/2016.3/SALTSTACK-GPG-KEY.pub
+    - key_url: https://repo.saltstack.com/apt/{{ os_name }}/{{ rel_ver }}/amd64/2016.3/SALTSTACK-GPG-KEY.pub
     - require_in:
 {% if 'salt-master' in grains['fqdn'] %}
       - pkg: salt-master

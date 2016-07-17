@@ -5,7 +5,7 @@ zbx_version: '3.0'
 {% load_yaml as zbx_agent_config %}
 zbx_agent_pid_file: /var/run/zabbix/zabbix_agentd.pid
 zbx_agent_log_file: /var/log/zabbix-agent/zabbix_agentd.log
-zbx_agent_server: zabb-vm.borenfam.com
+zbx_agent_server: ['zabb-vm.borenfam.com', 'zabbproxy-vm.borenfam.com', 'localhost']
 zbx_agent_server_active: zabb-vm.borenfam.com
 zbx_agent_include_path: /etc/zabbix/zabbix_agentd.d/
 {% endload %}
@@ -23,4 +23,17 @@ zbx_server_db_port: 3306
 zbx_server_address: localhost
 zbx_server_port: 10051
 zbx_server_name: zabb-vm
+{% endload %}
+
+{% load_yaml as zbx_proxy_config %}
+proxy_mode: 0
+server: zabbix-server.borenfam.com
+log_file: /var/log/zabbix/zabbix_proxy.log
+pid_file: /var/run/zabbix/zabbix_proxy.pid
+db_name: /usr/local/share/sqlite3/zabbix/zabbix_proxy.db
+timeout: 4
+external_scripts: /usr/lib/zabbix/externalscripts
+fping_location: /usr/bin/fping
+fping6_location: /usr/bin/fping6
+log_slow_queries: 3000
 {% endload %}

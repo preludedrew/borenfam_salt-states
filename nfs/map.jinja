@@ -1,0 +1,71 @@
+{% load_yaml as nfs_map %}
+- backup:
+  path: /nfs/backup
+  network: 10.1.1.1/24
+  options:
+    - rw
+    - async
+    - no_root_squash
+    - no_subtree_check
+- pxe:
+  path: /nfs/pxe
+  network: 10.1.1.1/24
+  options:
+    - rw
+    - async
+    - no_root_squash
+    - no_subtree_check
+- media:
+  path: /nfs/media
+  network: 10.1.1.1/24
+  options:
+    - rw
+    - async
+    - no_root_squash
+    - no_subtree_check
+- photos:
+  path: /nfs/photos
+  network: 10.1.1.1/24
+  options:
+    - rw
+    - async
+    - no_root_squash
+    - no_subtree_check
+- transmission:
+  path: /nfs/transmission
+  network: 10.1.1.1/24
+  options:
+    - rw
+    - async
+    - no_root_squash
+    - no_subtree_check
+{% endload %}
+
+{% load_yaml as nfs_mounts %}
+multi-vm:
+  - pxe:
+    name: pxe
+    mountpoint: /media/pxe
+    location: nas-vm-ha.borenfam.com
+    opts: "vers=3,rsize=65535,wsize=65535"
+    mkmnt: True
+torr-vm:
+  - pxe:
+    name: transmission
+    mountpoint: /media/transmission
+    location: nas-vm-ha.borenfam.com
+    opts: "vers=3,rsize=65535,wsize=65535"
+    mkmnt: True
+{% endload %}
+
+{% set pkg_map = salt['grains.filter_by']({
+  'Ubuntu': {
+    'pkgs_server': ['nfs-common', 'nfs-kernel-server'],
+    'pkgs_client': ['nfs-common'],
+  },
+  'Debian': {
+    'pkgs_server': ['nfs-common', 'nfs-kernel-server'],
+    'pkgs_client': ['nfs-common'],
+  }
+  }, grain='os_family')
+%}
