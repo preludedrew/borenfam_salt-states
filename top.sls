@@ -12,7 +12,6 @@ base:
   'nas-vm-*':
     - nfs.server
     - raid.lsi
-  'nas-1':
     - plex
   'multi-vm*':
     - pxe

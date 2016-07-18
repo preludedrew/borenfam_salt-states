@@ -1,5 +1,7 @@
 {% load_yaml as plex %}
 version: 1.0.0.2261-a17e99e
+data_dir: /nfs/data/plex/
+symlink_dir: '/var/lib/plexmediaserver/Library/Application Support/Plex Media Server'
 {% endload %}
 
 {% set arch = 'amd64' if salt['grains.get']('cpuarch') == 'x86_64' else 'i386' %}
