@@ -13,7 +13,7 @@ core|pkgs|zabbix-repo:
 {% elif grains['os_family'] == 'RedHat' %}
     - name: zabbix.repo
     - humanname: Zabbix {{ zbx_config.zbx_version }} Release ( RHEL )
-    - baseurl: http://repo.zabbix.com/zabbix/{{ zbx_config.zbx_version }}/rhel/{{ grains['osmajorrelease'] }}/x86_64/
+    - baseurl: http://repo.zabbix.com/zabbix/{{ zbx_config.zbx_version }}/rhel/7/x86_64/
     - gpgcheck: 1
     - gpgkey: http://repo.zabbix.com/RPM-GPG-KEY-ZABBIX
 {% elif grains['os_family'] == 'ClearOS' %}
@@ -42,3 +42,13 @@ core|pkgs|default-pkgs:
 {% for pkg in defaults.pkgs %}
       - {{ pkg }}
 {% endfor %}
+
+core|pkgs|tmux-conf:
+  file.managed:
+    - name: /home/andrew/.tmux.conf
+    - source: salt://pkgs/files/tmux.conf
+    - user: andrew
+    - group: andrew
+    - mode: 644
+    - require:
+       - user: andrew

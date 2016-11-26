@@ -1,17 +1,18 @@
 {% from "nfs/map.jinja" import nfs_map with context %}
 
-include:
-  - linuxha
+#include:
+#  - linuxha
 
 core|nfs|nfs-pkg:
   pkg.installed:
     - name: nfs-kernel-server
 
-core|nfs|nfs-disable-boot:
-  service.disabled:
-    - name: nfs-kernel-server
-    - require:
-      - pkg: nfs-kernel-server
+
+#core|nfs|nfs-disable-boot:
+#  service.disabled:
+#    - name: nfs-kernel-server
+#    - require:
+#      - pkg: nfs-kernel-server
 
 core|nfs|nfs-export:
   file.managed:
@@ -28,3 +29,11 @@ core|nfs|nfs-update-exports:
       - pkg: nfs-kernel-server
     - onchanges:
       - file: core|nfs|nfs-export
+
+core|nfs|transmission-user:
+  user.present:
+    - name: torrent-users
+    - uid: 1004
+    - gid_from_name: True
+    - gid: 1004
+    - createhome: False

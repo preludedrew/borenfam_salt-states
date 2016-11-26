@@ -11,13 +11,11 @@ core|pxe|tftpd-config:
 
 core|pxe|tfpd-pkg:
   pkg.installed:
-    - pkgs:
-      - tftpd-hpa
+    - name: tftpd-hpa
 
 core|pxe|tftpd-service:
   service.running:
     - enable: True
-    - reload: True
     - require:
       - pkg: tftpd-hpa
     - onchanges:

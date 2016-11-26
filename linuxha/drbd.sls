@@ -39,7 +39,3 @@ core|linuxha|drbd-mount:
     - user: {{ linuxha_res.drbd_mount_owner }}
     - group: {{ linuxha_res.drbd_mount_owner }}
     - create: True
-    - recurse:
-        - user
-        - group
-        - mode

@@ -11,7 +11,7 @@ core|zabbix|proxy|proxy-conf:
     - source: salt://zabbix/files/zabbix_proxy.conf
     - template: jinja
     - defaults:
-      hostname: {{ grains['fqdn'] }}
+      hostname: PROXY01
       proxy_mode: {{ zbx_proxy_config.proxy_mode }}
       server: {{ zbx_proxy_config.server }}
       log_file: {{ zbx_proxy_config.log_file }}

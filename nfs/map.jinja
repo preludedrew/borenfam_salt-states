@@ -7,6 +7,7 @@
     - async
     - no_root_squash
     - no_subtree_check
+    - fsid=1
 - pxe:
   path: /nfs/pxe
   network: 10.1.1.1/24
@@ -15,6 +16,7 @@
     - async
     - no_root_squash
     - no_subtree_check
+    - fsid=2
 - media:
   path: /nfs/media
   network: 10.1.1.1/24
@@ -23,6 +25,7 @@
     - async
     - no_root_squash
     - no_subtree_check
+    - fsid=3
 - photos:
   path: /nfs/photos
   network: 10.1.1.1/24
@@ -31,6 +34,7 @@
     - async
     - no_root_squash
     - no_subtree_check
+    - fsid=4
 - transmission:
   path: /nfs/transmission
   network: 10.1.1.1/24
@@ -39,6 +43,7 @@
     - async
     - no_root_squash
     - no_subtree_check
+    - fsid=5
 {% endload %}
 
 {% load_yaml as nfs_mounts %}
@@ -46,13 +51,38 @@ multi-vm:
   - pxe:
     name: pxe
     mountpoint: /media/pxe
-    location: nas-vm-ha.borenfam.com
+    location: nas-vm.borenfam.com
     opts: "vers=3,rsize=65535,wsize=65535"
     mkmnt: True
 torr-vm:
   - pxe:
     name: transmission
     mountpoint: /media/transmission
+    location: nas-vm.borenfam.com
+    opts: "vers=3,rsize=65535,wsize=65535"
+    mkmnt: True
+andrew-fc:
+  - transmission:
+    name: transmission
+    mountpoint: /media/nfs/transmission
+    location: nas-vm.borenfam.com
+    opts: "vers=3,rsize=65535,wsize=65535"
+    mkmnt: True
+  - backup:
+    name: backup
+    mountpoint: /media/nfs/backup
+    location: nas-vm-ha.borenfam.com
+    opts: "vers=3,rsize=65535,wsize=65535"
+    mkmnt: True
+  - photos:
+    name: photos
+    mountpoint: /media/nfs/photos
+    location: nas-vm-ha.borenfam.com
+    opts: "vers=3,rsize=65535,wsize=65535"
+    mkmnt: True
+  - media:
+    name: media
+    mountpoint: /media/nfs/media
     location: nas-vm-ha.borenfam.com
     opts: "vers=3,rsize=65535,wsize=65535"
     mkmnt: True
@@ -66,6 +96,10 @@ torr-vm:
   'Debian': {
     'pkgs_server': ['nfs-common', 'nfs-kernel-server'],
     'pkgs_client': ['nfs-common'],
+  },
+  'RedHat': {
+    'pkgs_server': [],
+    'pkgs_client': ['nfs-utils'],
   }
   }, grain='os_family')
 %}

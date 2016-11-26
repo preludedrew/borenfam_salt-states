@@ -7,3 +7,8 @@ core|salt|rng_tools:
 core|salt|salt-master-pkg:
   pkg.latest:
     - name: salt-master
+
+core|salt|salt-api-user:
+  user.present:
+    - name: api_user
+    - password: '12345678'

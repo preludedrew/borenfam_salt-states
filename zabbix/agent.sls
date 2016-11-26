@@ -25,7 +25,6 @@ core|zabbix|agent-conf:
       zbx_agent_pid_file: {{ zbx_agent_config.zbx_agent_pid_file }}
       zbx_agent_log_file: {{ zbx_agent_config.zbx_agent_log_file }}
       zbx_agent_server: {{ zbx_agent_config.zbx_agent_server|join(',') }}
-      zbx_agent_server_active: {{ zbx_agent_config.zbx_agent_server_active }}
       zbx_agent_include_path: {{ zbx_agent_config.zbx_agent_include_path }}
     - require:
       - pkg: zabbix-agent
@@ -40,19 +39,7 @@ core|zabbix|agent-service:
 
 core|zabbix|check-server:
   cmd.run:
-    - name: 'test ! $(which zabbix_server)'
-
-core|zabbix|dummy-server:
-  file.managed:
-    - name: /usr/local/bin/zabbix_server
-    - user: root
-    - group: root
-    - mode: 755
-    - require:
-      - core|zabbix|check-server
-    - contents: |
-        #!/bin/bash
-        echo "This is script is a hack to fulfill salt zabbix module requirements"
+    - name: 'test $(which zabbix_server) || touch /usr/local/bin/zabbix_server'
 
 core|zabbix|agent|host-exists:
   zabbix_host.present:
@@ -62,7 +49,7 @@ core|zabbix|agent|host-exists:
 
 
 {% if salt['zbx.host_exists'](grains['fqdn']) %}
-{% set host_id = salt['zabbix.host_get'](grains.fqdn)[0].hostid %}
+{% set host_id = salt['zbx.host_get'](grains.fqdn)[0].hostid %}
 {% set template_list = [{'templateid': '10001'}] %}
 
 core|zabbix|agent|templates:

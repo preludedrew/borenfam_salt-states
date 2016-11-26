@@ -1,5 +1,5 @@
-include:
-  - linuxha
+#include:
+#  - linuxha
 
 core|mysql|mysql56-pkg:
   pkg.installed:

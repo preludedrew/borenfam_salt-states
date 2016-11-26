@@ -3,10 +3,14 @@ zbx_version: '3.0'
 {% endload %}
 
 {% load_yaml as zbx_agent_config %}
+{% if grains['os_family'] == 'Debian' %}
 zbx_agent_pid_file: /var/run/zabbix/zabbix_agentd.pid
 zbx_agent_log_file: /var/log/zabbix-agent/zabbix_agentd.log
-zbx_agent_server: ['zabb-vm.borenfam.com', 'zabbproxy-vm.borenfam.com', 'localhost']
-zbx_agent_server_active: zabb-vm.borenfam.com
+{% elif grains['os_family'] == 'RedHat' %}
+zbx_agent_pid_file: /run/zabbix/zabbix_agentd.pid
+zbx_agent_log_file: /var/log/zabbix/zabbix_agentd.log
+{% endif %}
+zbx_agent_server: ['10.1.1.165', 'zabb-vm.borenfam.com', 'localhost']
 zbx_agent_include_path: /etc/zabbix/zabbix_agentd.d/
 {% endload %}
 

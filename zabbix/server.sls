@@ -36,6 +36,10 @@ core|zabbix|frontend-conf:
       zbx_server_port: {{ zbx_server_config.zbx_server_port }}
       zbx_server_name: {{ zbx_server_config.zbx_server_name }}
 
+core|zabbix|server-service:
+  service.running:
+    - name: zabbix-server
+
 {% if zbx_config.zbx_version == "3.0" %}
 core|zabbix|zabbix3-frontend-conf:
   file.symlink:

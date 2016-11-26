@@ -9,7 +9,10 @@ base:
 {% if grains['virtual'] != "physical" %}
     - vm
 {% endif %}
-  'nas-vm-*':
+  'nas-[1-2]':
+    - nfs.server
+    - plex
+  'nas-vm*':
     - nfs.server
     - raid.lsi
     - plex
@@ -27,3 +30,5 @@ base:
     - zabbix.proxy
   'build-*':
     - build
+  'torr-vm*':
+    - torrent.server
